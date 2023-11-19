@@ -25,5 +25,4 @@ public class User extends BaseModel {
         userDto.setRoles(user.getRoles());
         return userDto;
     }
-
 }
