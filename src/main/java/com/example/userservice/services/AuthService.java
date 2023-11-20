@@ -111,7 +111,7 @@ public class AuthService {
     public UserDto signUp(String email, String password){
         User user = new User();
         user.setEmail(email);
-        //user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setPassword(bCryptPasswordEncoder.encode(password));
         User savedUser = userRepository.save(user);
         return UserDto.from(savedUser);
     }
