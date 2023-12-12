@@ -81,4 +81,4 @@ public class JpaOAuth2AuthorizationConsentService implements OAuth2Authorization
 
         return entity;
     }
-}
+} 

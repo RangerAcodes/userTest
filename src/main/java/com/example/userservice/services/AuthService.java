@@ -29,15 +29,16 @@ public class AuthService {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     //Constructor of AuthService class
 
-    public AuthService(UserRepository userRepository, SessionRepository sessionRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AuthService(UserRepository userRepository, SessionRepository sessionRepository ){
+    //, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.sessionRepository = sessionRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        //this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
     //created constructor of bCryptPasswordEncoder in Security Class
 
@@ -52,9 +53,9 @@ public class AuthService {
         User user = userOptional.get();
 
         //validation
-        if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            return null;
-        }
+//        if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
+//            return null;
+//        }
 
         //return null;
 
@@ -70,6 +71,7 @@ public class AuthService {
         SecretKey key = alg.key().build();
 
         String token = Jwts.builder().claims(jsonForJwt).signWith(key, alg).compact();
+
         Session session = new Session();
         session.setSessionStatus(SessionStatus.ACTIVE);
         session.setToken(token);
@@ -111,7 +113,7 @@ public class AuthService {
     public UserDto signUp(String email, String password){
         User user = new User();
         user.setEmail(email);
-        user.setPassword(bCryptPasswordEncoder.encode(password));
+        //user.setPassword(bCryptPasswordEncoder.encode(password));
         User savedUser = userRepository.save(user);
         return UserDto.from(savedUser);
     }

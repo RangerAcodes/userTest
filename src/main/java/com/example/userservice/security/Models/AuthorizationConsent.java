@@ -1,5 +1,10 @@
 package com.example.userservice.security.Models;
 
+/*The OAuth consent is a prompt that
+ informs users about who is requesting access to their
+  data and what kind of data they are allowing the app to access.
+ */
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

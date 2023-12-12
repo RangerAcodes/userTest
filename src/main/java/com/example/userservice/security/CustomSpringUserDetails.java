@@ -1,14 +1,22 @@
 package com.example.userservice.security;
 
+import com.example.userservice.Models.Role;
 import com.example.userservice.Models.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class CustomSpringUserDetails implements UserDetails {
 
     private User user;
+
+    public CustomSpringUserDetails() {
+    }
+
     public CustomSpringUserDetails(User user) {
         this.user = user;
 
@@ -16,37 +24,51 @@ public class CustomSpringUserDetails implements UserDetails {
 
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+        List<CustomSpringGrantedAuthority> customSpringGrantedAuthorities = new ArrayList<>();
 
+        for (Role role: user.getRoles()) {
+            customSpringGrantedAuthorities.add(
+                    new CustomSpringGrantedAuthority(role)
+            );
+        }
+
+        return customSpringGrantedAuthorities;
+    }
     @Override
+    @JsonIgnore
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
-        return null;
+        return user.getEmail();
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
